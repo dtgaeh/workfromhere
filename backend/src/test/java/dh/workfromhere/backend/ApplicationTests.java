@@ -1,4 +1,4 @@
-package dh.workfromhere.workfromhere;
+package dh.workfromhere.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

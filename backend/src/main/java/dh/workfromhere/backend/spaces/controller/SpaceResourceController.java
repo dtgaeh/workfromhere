@@ -20,23 +20,21 @@ public class SpaceResourceController {
 
     @GetMapping(BASE_URL)
     public ResponseEntity<List<SpaceResource>> getAllSpaces() {
-        return ResponseEntity.ok().body(spaceResourceService.getAllSpaces);
+        return ResponseEntity.ok().body(spaceResourceService.getAllSpaces());
     }
 
     @GetMapping(BASE_URL + "{id}")
-    public ResponseEntity<SpaceResource> getSpaceById(@PathVariable String id) {
+    public ResponseEntity<SpaceResource> getSpaceById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(spaceResourceService.getSpaceById(id));
     }
 
     @PostMapping(BASE_URL)
     public ResponseEntity<SpaceResource> createSpace(@RequestBody SpaceResource spaceResource) {
-        return new ResponseEntity<SpaceResource>(
-                spaceResourceService.createSpace(spaceResource), HttpStatus.CREATED
-        );
+       return ResponseEntity.status(HttpStatus.CREATED).body(spaceResourceService.createSpace(spaceResource));
     }
 
     @PutMapping(BASE_URL + "{id}")
-    public ResponseEntity<SpaceResource> updateSpace(
+    public ResponseEntity<Void> updateSpace(
             @PathVariable Integer id,
             @RequestBody SpaceResource upDatedSpaceResource)
     {
@@ -46,7 +44,7 @@ public class SpaceResourceController {
     }
 
     @DeleteMapping
-    public ResponseEntity<SpaceResource> deleteSpace(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteSpace(@PathVariable Integer id) {
         spaceResourceService.deleteSpaceById(id);
 
         return ResponseEntity.noContent().build();

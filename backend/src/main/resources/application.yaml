@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: "Work From Here"

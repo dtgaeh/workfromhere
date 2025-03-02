@@ -7,11 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "spaces")
@@ -37,5 +39,5 @@ public class SpaceResource {
     private String wifiPassword;
 
     @Column(name = "wifi_speed")
-    private float speed;
+    private float wifiSpeed;
 }

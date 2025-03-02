@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 public class SpaceResourceController {
 
-    private static final String SPACES_BASE_PATH = "api/v1/spaces";
+    private static final String SPACES_BASE_PATH = "api/v1/spaces/";
 
     private final SpaceResourceService spaceResourceService;
 
@@ -32,7 +32,7 @@ public class SpaceResourceController {
         return ResponseEntity.ok(spaceResourceService.getAllSpaces());
     }
 
-    @GetMapping(value = SPACES_BASE_PATH + "/{id}")
+    @GetMapping(value = SPACES_BASE_PATH + "{id}")
     public ResponseEntity<SpaceResource> getSpaceById(@PathVariable("id") Integer id) {
 
         return ResponseEntity.ok(spaceResourceService.getSpaceById(id));
@@ -42,13 +42,13 @@ public class SpaceResourceController {
     public ResponseEntity<SpaceResource> createSpace(@RequestBody SpaceResource spaceResource) {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
+                .path("{id}")
                 .build(spaceResource.getId());
 
-        return ResponseEntity.created(location).body(spaceResourceService.createSpace());
+        return ResponseEntity.created(location).body(spaceResourceService.createSpace(spaceResource));
     }
 
-    @PutMapping(value = SPACES_BASE_PATH + "{/id}")
+    @PutMapping(value = SPACES_BASE_PATH + "{id}")
     public ResponseEntity<SpaceResource> updateSpace(@PathVariable("id") Integer id, @RequestBody SpaceResource modifiedSpaceResource) {
         SpaceResource origionalSpaceResource = spaceResourceService.getSpaceById(id);
 
@@ -59,12 +59,12 @@ public class SpaceResourceController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping(value = SPACES_BASE_PATH + "{/id}")
+    @DeleteMapping(value = SPACES_BASE_PATH + "{id}")
     public ResponseEntity<Void> deleteSpace(@PathVariable("id") Integer id) {
         SpaceResource spaceResource = spaceResourceService.getSpaceById(id);
 
         if (spaceResource != null) {
-            spaceResourceSerivce.deleteSpaceById(id);
+            spaceResourceService.deleteSpaceById(id);
         }
 
         return ResponseEntity.noContent().build();

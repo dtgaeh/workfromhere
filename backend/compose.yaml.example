@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:17.4
+    container_name: yourcontainer
+    environment:
+      - POSTGRES_USER=your_user
+      - POSTGRES_PASSWORD=your_password
+      - POSTGRES_DB=your_db
+    ports:
+      - "1234:5678"

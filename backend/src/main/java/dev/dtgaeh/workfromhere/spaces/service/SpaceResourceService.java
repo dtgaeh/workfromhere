@@ -1,5 +1,6 @@
 package dev.dtgaeh.workfromhere.spaces.service;
 
+import dev.dtgaeh.workfromhere.spaces.exception.SpaceResourceException;
 import dev.dtgaeh.workfromhere.spaces.model.SpaceResource;
 import dev.dtgaeh.workfromhere.spaces.repository.SpaceResourceRepository;
 import jakarta.transaction.Transactional;
@@ -22,7 +23,8 @@ public class SpaceResourceService {
     }
 
     public SpaceResource getSpaceById(Integer id) {
-        return spaceResourceRepository.findById(id).orElse(null);
+        return spaceResourceRepository.findById(id)
+                .orElseThrow(() -> new SpaceResourceException("Space with id " + id + " not found"));
     }
 
     public SpaceResource createSpace(SpaceResource spaceResource) {
@@ -31,13 +33,19 @@ public class SpaceResourceService {
 
     @Transactional
     public void updateSpace(Integer id, SpaceResource modifiedSpaceResource) {
-        spaceResourceRepository.findById(id).ifPresent(spaceResource -> modifySpace(modifiedSpaceResource, spaceResource));
+        SpaceResource spaceResource = getSpaceById(id);
 
+        if (spaceResource != null) {
+            modifySpace(modifiedSpaceResource, spaceResource);
+        }
     }
 
     public void deleteSpaceById(Integer id) {
-        spaceResourceRepository.findById(id).ifPresent(spaceResourceRepository::delete);
+        SpaceResource spaceResource = getSpaceById(id);
 
+        if (spaceResource != null) {
+            spaceResourceRepository.delete(spaceResource);
+        }
     }
 
     private void modifySpace(SpaceResource modifiedSpaceResource, SpaceResource spaceResource) {

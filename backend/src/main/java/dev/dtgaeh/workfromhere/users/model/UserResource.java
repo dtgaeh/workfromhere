@@ -1,11 +1,7 @@
 package dev.dtgaeh.workfromhere.users.model;
 
 import dev.dtgaeh.workfromhere.spaces.model.SpaceResource;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
+@Entity
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,8 +30,9 @@ public class UserResource {
     private String password;
 
     @Column(name = "role", nullable = false)
-    private String role;
+    private UserRoleResource role;
 
+    @OneToMany
     @Column(name = "user_spaces")
     private List<SpaceResource> favouriteSpaces;
 }

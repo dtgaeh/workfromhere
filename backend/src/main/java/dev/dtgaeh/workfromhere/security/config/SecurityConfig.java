@@ -22,7 +22,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request -> {
                     request.requestMatchers("/admin/**").hasRole(UserRoleResource.ADMIN.name());
                     request.requestMatchers("/user/**").hasRole(UserRoleResource.USER.name());
-                    request.requestMatchers("/api/v1/**").permitAll();
+                    request.requestMatchers("/api/v1/auth/**").permitAll();
+                    request.requestMatchers("/api/v1/spaces/**").permitAll();
                     request.requestMatchers("/login/**").permitAll();
                     request.anyRequest().authenticated();
                 })
